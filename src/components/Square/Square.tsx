@@ -10,6 +10,7 @@ const Square = ({ value, onClick }: SquareProps) => {
     <button className="square" onClick={onClick}>
       {value}
     </button>
+    // 123
   );
 };
 export default Square;
