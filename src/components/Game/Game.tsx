@@ -5,11 +5,12 @@ import "./Game.css";
 const Game = () => {
   const [history, setHistory] = useState([{}]);
   const [squares, setSquares] = useState(["", "", "", "", "", "", "", "", ""]);
+  const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
 
   function handleClick(i: number) {
-    const History = history;
-    // const current = history[history.length - 1];
+    const History = history.slice(0, stepNumber + 1);
+    // const current = history[stepNumber];
     const Squares = squares.slice();
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -23,14 +24,26 @@ const Game = () => {
         },
       ])
     );
+    setStepNumber(History.length);
     setXIsNext(!xIsNext);
+  }
+
+  function jumpTo(step) {
+    ({
+      setStepNumber: step,
+      setXIsNext: step % 2 === 0,
+    });
   }
 
   const moves = history.map((step, move) => {
     const desc = move ? `Перейти к ходу #${move}` : "К началу игры";
+    function jumpTo(move: number): void {
+      throw new Error("Function not implemented.");
+    }
+
     return (
       <li key={move}>
-        <button onClick={() => console.log(move)}>{desc}</button>
+        <button onClick={() => jumpTo(move)}>{desc}</button>
       </li>
     );
   });
